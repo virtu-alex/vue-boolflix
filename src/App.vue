@@ -8,7 +8,7 @@
     <main>
       <h1>Informazioni titolo scelto</h1>
       <ul>
-        <li v-for="movie in movies" :key="movie.id">{{ movie.title }}</li>
+        <li v-for="movie in movies" :key="movie.id"><strong>Movie Title </strong> {{ movie.title }} - <strong>Original Movie Title </strong> {{ movie.original_title }} <strong>Movie Lenguage </strong> - {{ movie.original_language }} - <strong>Avarage Movie Vote </strong> {{ movie.vote_average }}</li>
       </ul>
     </main>
     <footer></footer>
