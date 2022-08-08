@@ -34,7 +34,19 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+header {
+  height: 80px;
+  background-color: black;
+}
+
+.logo{
+  height: 80px;
+  width: 200px;
+}&img{
+  height: 80px;
+  width: 150px;
+}
 </style>
 
 

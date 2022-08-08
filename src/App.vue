@@ -1,11 +1,14 @@
+//* aggiungo la copertina del film o della serie tv (ho solo la parte finale dell'url) ??dimensioni diverse?? 
+//* URL DI BASE https://image.tmdb.org/t/p/ + ??DIMENSIONI??
+
 <template>
   <div id="app">
     <SearchBar placeholder="Cerca..." @search="getQuerys" />
     <main>
-      <div class="container">
+      <div class="container m-0">
         <h1>Informazioni titolo scelto</h1>
-        <ul>
-          <li><h3>LISTA FILM</h3></li>
+        <ul class="d-flex flex-direction-column">
+          <li class="m-4"><h3>LISTA FILM</h3></li>
           <li v-for="movie in productions.mappedMovies" :key="movie.id">
             <strong>Movie Title - </strong> {{ movie.original_heading }}
             <strong>Original Movie Title - </strong> {{ movie.original }}
@@ -15,16 +18,30 @@
               :src="require(`./assets/flags/${movie.flagPath}.png`)"
               alt=""
             />{{ movie.original_language }}
-            <strong>Avarage Movie Vote - </strong> {{ movie.vote_average }}
+            <img
+              :src="`https://image.tmdb.org/t/p/w342/${movie.poster_path}`"
+              alt=""
+            />
+            <strong>Avarage Movie Vote  - </strong> {{ movie.vote_average }}
           </li>
+          <li></li>
         </ul>
-        <ul>
-          <li><h3>LISTA SERIE TV</h3></li>
+        <ul class="d-flex flex-direction-column">
+          <li class="m-4"><h3>LISTA SERIE TV</h3></li>
           <li v-for="serie in productions.mappedSeries" :key="serie.id">
             <strong>Serie Title - </strong> {{ serie.original_heading }}
             <strong>Original Serie Title - </strong> {{ serie.original }}
-            <strong>Serie Lenguage - </strong
-            ><img class="flag" :src="require(`./assets/flags/${serie.flagPath}.png`)" alt="" />
+            <strong>Serie Lenguage - <i class="fa-regular fa-star"></i> </strong
+            ><img
+              class="flag"
+              :src="require(`./assets/flags/${serie.flagPath}.png`)"
+              alt=""
+            />
+            <img
+              :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`"
+              alt=""
+            />
+
             <strong>Avarage Serie Vote - </strong> {{ serie.vote_average }}
           </li>
         </ul>
@@ -54,7 +71,6 @@ export default {
   },
   computed: {
     productions() {
-      // const allProductions = [...this.movies, ...this.series];
       let mappedMovies = this.movies.map(this.mapProductions);
       let mappedSeries = this.series.map(this.mapProductions);
       return {
@@ -96,7 +112,9 @@ export default {
       return {
         id,
         original_language,
-        flagPath: ["it", "en"].includes(original_language) ? original_language : "nopic",
+        flagPath: ["it", "en"].includes(original_language)
+          ? original_language
+          : "nopic",
         vote_average,
         poster_path,
         original_heading: originalHeading,
@@ -128,6 +146,7 @@ export default {
  9 title *movies* 
  10 poster_path
  */
+
 <style lang="scss">
 @import "~bootstrap/scss/bootstrap";
 
