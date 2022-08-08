@@ -22,6 +22,7 @@
               :src="`https://image.tmdb.org/t/p/w342/${movie.poster_path}`"
               alt=""
             />
+            <FontAwesomeIcon icon="fa-regular fa-star" />
             <strong>Avarage Movie Vote  - </strong> {{ movie.vote_average }}
           </li>
           <li></li>
@@ -31,7 +32,7 @@
           <li v-for="serie in productions.mappedSeries" :key="serie.id">
             <strong>Serie Title - </strong> {{ serie.original_heading }}
             <strong>Original Serie Title - </strong> {{ serie.original }}
-            <strong>Serie Lenguage - <i class="fa-regular fa-star"></i> </strong
+            <strong>Serie Lenguage - <i class="fa-regular fa-star"></i> <i class="fa-regular fa-star"></i> </strong
             ><img
               class="flag"
               :src="require(`./assets/flags/${serie.flagPath}.png`)"
@@ -54,11 +55,20 @@
 <script>
 import axios from "axios";
 import SearchBar from "./components/SearchBar.vue";
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core'
 
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+/* import specific icons */
+import { faStar } from '@fortawesome/free-regular-svg-icons'
+library.add(faStar)
 export default {
   name: "App",
   components: {
     SearchBar,
+    FontAwesomeIcon,
   },
   data() {
     return {
@@ -153,5 +163,8 @@ export default {
 .flag {
   width: 25px;
   height: 25px;
+}
+ul{
+  list-style: none;
 }
 </style>
