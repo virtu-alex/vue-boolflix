@@ -1,6 +1,3 @@
-//* aggiungo la copertina del film o della serie tv (ho solo la parte finale dell'url) ??dimensioni diverse?? 
-//* URL DI BASE https://image.tmdb.org/t/p/ + ??DIMENSIONI??
-
 <template>
   <div id="app">
     <SearchBar placeholder="Cerca..." @search="getQuerys" />
@@ -22,8 +19,18 @@
               :src="`https://image.tmdb.org/t/p/w342/${movie.poster_path}`"
               alt=""
             />
-            <FontAwesomeIcon icon="fa-regular fa-star" />
-            <strong>Avarage Movie Vote  - </strong> {{ movie.vote_average }}
+            <FontAwesomeIcon
+              v-for="index in getStarsVote(movie.vote_average)"
+              :key="index + 10"
+              icon="fa-solid fa-star"
+            />
+            <FontAwesomeIcon
+              v-for="index in 5 - getStarsVote(movie.vote_average)"
+              :key="index"
+              icon="fa-regular fa-star"
+            />
+            <!-- <FontAwesomeIcon icon="fa-solid fa-star" /> -->
+            <strong>Avarage Movie Vote - </strong> {{ movie.vote_average }}
           </li>
           <li></li>
         </ul>
@@ -32,7 +39,7 @@
           <li v-for="serie in productions.mappedSeries" :key="serie.id">
             <strong>Serie Title - </strong> {{ serie.original_heading }}
             <strong>Original Serie Title - </strong> {{ serie.original }}
-            <strong>Serie Lenguage - <i class="fa-regular fa-star"></i> <i class="fa-regular fa-star"></i> </strong
+            <strong>Serie Lenguage - </strong
             ><img
               class="flag"
               :src="require(`./assets/flags/${serie.flagPath}.png`)"
@@ -41,6 +48,16 @@
             <img
               :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`"
               alt=""
+            />
+            <FontAwesomeIcon
+              v-for="index in getStarsVote(serie.vote_average)"
+              :key="index + 10"
+              icon="fa-solid fa-star"
+            />
+            <FontAwesomeIcon
+              v-for="index in 5 - getStarsVote(serie.vote_average)"
+              :key="index"
+              icon="fa-regular fa-star"
             />
 
             <strong>Avarage Serie Vote - </strong> {{ serie.vote_average }}
@@ -56,14 +73,15 @@
 import axios from "axios";
 import SearchBar from "./components/SearchBar.vue";
 /* import the fontawesome core */
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { library } from "@fortawesome/fontawesome-svg-core";
 
 /* import font awesome icon component */
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 /* import specific icons */
-import { faStar } from '@fortawesome/free-regular-svg-icons'
-library.add(faStar)
+import { faStar } from "@fortawesome/free-regular-svg-icons";
+import { faStar as faStarFull } from "@fortawesome/free-solid-svg-icons";
+library.add(faStar, faStarFull);
 export default {
   name: "App",
   components: {
@@ -91,7 +109,6 @@ export default {
   },
   methods: {
     getQuerys(query) {
-      //CALL FOR MOVIES
       if (!query) {
         this.movies = [];
         this.series = [];
@@ -132,6 +149,13 @@ export default {
         type,
       };
     },
+    getStarsVote(fullVote) {
+      if (this.vote_average === 0) {
+        return +1;
+      } else {
+        return Math.ceil(fullVote / 2) - 1;
+      }
+    },
 
     //endpoint: /search/tv/
     //config: https://axios-http.com/docs/req_config
@@ -144,6 +168,7 @@ export default {
   },
 };
 </script>
+
 /** 
  1 tipo dell'informazione
  2 id 
@@ -155,7 +180,7 @@ export default {
  8 name *series*
  9 title *movies* 
  10 poster_path
- */
+ **/
 
 <style lang="scss">
 @import "~bootstrap/scss/bootstrap";
@@ -164,7 +189,7 @@ export default {
   width: 25px;
   height: 25px;
 }
-ul{
+ul {
   list-style: none;
 }
 </style>
