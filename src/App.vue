@@ -5,81 +5,110 @@
       <div class="container m-0">
         <div class="row">
           <div class="col">
-            <ul class="d-flex">
-              <li class="m-4"><h3>LISTA FILM</h3></li>
+            <h3 class="ps-5">Movies list</h3>
+            <ul class="d-flex flex-direction-column">
+              <li class="m-3"></li>
               <div
+                class="card-container position-relative px-3"
                 v-for="movie in productions.mappedMovies"
                 :key="movie.id"
-                class="d-flex"
               >
                 <div class="card">
                   <img
-                    :src="`https://image.tmdb.org/t/p/w342/${movie.poster_path}`"
+                    v-if="movie.poster_path === null"
+                    src="./assets/noimage.jpeg"
                     alt=""
+                  />
+                  <img
+                    v-else
+                    :src="`https://image.tmdb.org/t/p/w342/${movie.poster_path}`"
+                    :alt="movie.original"
                   />
                 </div>
-                <li class="">
-                  <strong>Movie Title - </strong> {{ movie.original_heading }}
-                  <strong>Original Movie Title - </strong> {{ movie.original }}
-                  <strong>Movie Lenguage - </strong
-                  ><img
-                    class="flag"
-                    :src="require(`./assets/flags/${movie.flagPath}.png`)"
-                    alt=""
-                  />{{ movie.original_language }}
-                  <FontAwesomeIcon
-                    v-for="index in getStarsVote(movie.vote_average)"
-                    :key="index + 30"
-                    icon="fa-solid fa-star"
-                  />
-                  <FontAwesomeIcon
-                    v-for="index in 5 - getStarsVote(movie.vote_average)"
-                    :key="index"
-                    icon="fa-regular fa-star"
-                  />
-                  <strong>Avarage Movie Vote - </strong>
-                  {{ movie.vote_average }}
-                </li>
+                <div class="overlay">
+                  <li><strong>Movie Title - </strong> {{ movie.original }}</li>
+                  <li>
+                    <strong>Original Movie Title - </strong>
+                    {{ movie.original_heading }}
+                  </li>
+                  <li>
+                    <strong>Movie Lenguage - </strong>
+                  </li>
+                  <li>
+                    <img
+                      class="flag mx-1"
+                      :src="require(`./assets/flags/${movie.flagPath}.png`)"
+                      :alt="movie.original"
+                    />{{ movie.original_language }}
+                    <FontAwesomeIcon
+                      v-for="index in getStarsVote(movie.vote_average)"
+                      :key="index + 10"
+                      icon="fa-solid fa-star"
+                    />
+                    <FontAwesomeIcon
+                      v-for="index in 5 - getStarsVote(movie.vote_average)"
+                      :key="index"
+                      icon="fa-regular fa-star"
+                    />
+                    <strong>Avarage Movie Vote - </strong>
+                    {{ movie.vote_average }}
+                  </li>
+                </div>
               </div>
             </ul>
           </div>
         </div>
         <div class="row mt-5">
           <div class="col">
-            <ul class="d-flex">
-              <li class="m-4"><h3>LISTA SERIE TV</h3></li>
+            <h3 class="ps-5">TV Series list</h3>
+            <ul class="d-flex flex-direction-column">
+              <li class="m-3"></li>
               <div
+                class="card-container position-relative px-3"
                 v-for="serie in productions.mappedSeries"
                 :key="serie.id"
-                class="d-flex"
               >
-                <li>
-                  <strong>Serie Title - </strong> {{ serie.original_heading }}
-                  <strong>Original Serie Title - </strong> {{ serie.original }}
-                  <strong>Serie Lenguage - </strong
-                  ><img
-                    class="flag"
-                    :src="require(`./assets/flags/${serie.flagPath}.png`)"
-                    alt=""
-                  />
+                <div class="card">
                   <img
-                    :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`"
+                    v-if="serie.poster_path === null"
+                    src="./assets/noimage.jpeg"
                     alt=""
                   />
-                  <FontAwesomeIcon
-                    v-for="index in getStarsVote(serie.vote_average)"
-                    :key="index + 20"
-                    icon="fa-solid fa-star"
+                  <img v-else
+                    :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`"
+                    :alt="serie.original"
                   />
-                  <FontAwesomeIcon
-                    v-for="index in 5 - getStarsVote(serie.vote_average)"
-                    :key="index"
-                    icon="fa-regular fa-star"
-                  />
+                </div>
+                <div class="overlay">
+                  <li><strong>Serie Title - </strong> {{ serie.original }}</li>
+                  <li>
+                    <strong>Original Serie Title - </strong>
+                    {{ serie.original_heading }}
+                  </li>
+                  <li>
+                    <strong>Serie Lenguage - </strong>
+                  </li>
+                  <li>
+                    <img
+                      class="flag mx-1"
+                      :src="require(`./assets/flags/${serie.flagPath}.png`)"
+                      alt=""
+                    />
+                    <FontAwesomeIcon
+                      v-for="index in getStarsVote(serie.vote_average)"
+                      :key="index + 20"
+                      icon="fa-solid fa-star"
+                    />
+                    <FontAwesomeIcon
+                      v-for="index in 5 - getStarsVote(serie.vote_average)"
+                      :key="index"
+                      icon="fa-regular fa-star"
+                    />
 
-                  <strong>Avarage Serie Vote - </strong>
-                  {{ serie.vote_average }}
-                </li>
+                    <strong>Avarage Serie Vote - </strong>
+                    {{ serie.vote_average }}
+                  </li>
+                </div>
               </div>
             </ul>
           </div>
@@ -206,11 +235,41 @@ export default {
   width: 25px;
   height: 25px;
 }
+
 ul {
   list-style: none;
 }
-body{
+
+body {
   background-color: black;
   color: white;
+  font-family: "League Gothic", sans-serif;
+  font-family: "Stick No Bills", sans-serif;
+}
+
+.card {
+  max-width: 150px;
+}
+
+.card-container {
+  width: 200px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.5s ease;
+  background-color: black;
+}
+
+.card-container:hover .overlay {
+  opacity: 1;
+  scale: 1.05;
 }
 </style>

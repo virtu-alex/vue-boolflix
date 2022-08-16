@@ -43,7 +43,7 @@ header {
 .logo{
   height: 80px;
   width: 200px;
-}&img{
+}& img{
   height: 80px;
   width: 150px;
 }
