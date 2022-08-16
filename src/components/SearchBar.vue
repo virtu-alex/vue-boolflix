@@ -1,6 +1,8 @@
 <template>
   <header>
-    <div class="container my-5 d-flex justify-content-end">
+    <div class="container my-5 d-flex justify-content-center align-items-center">
+      <img class="logo pe-3" src="../assets/bool-logo.png" alt="boolflix logo">
+
       <input
         :placeholder="placeholder"
         type="text"
@@ -35,4 +37,7 @@ export default {
 </script>
 
 <style>
+.logo{
+  height: 75px;
+}
 </style>

@@ -3,66 +3,87 @@
     <SearchBar placeholder="Cerca..." @search="getQuerys" />
     <main>
       <div class="container m-0">
-        <h1>Informazioni titolo scelto</h1>
-        <ul class="d-flex flex-direction-column">
-          <li class="m-4"><h3>LISTA FILM</h3></li>
-          <li v-for="movie in productions.mappedMovies" :key="movie.id">
-            <strong>Movie Title - </strong> {{ movie.original_heading }}
-            <strong>Original Movie Title - </strong> {{ movie.original }}
-            <strong>Movie Lenguage - </strong
-            ><img
-              class="flag"
-              :src="require(`./assets/flags/${movie.flagPath}.png`)"
-              alt=""
-            />{{ movie.original_language }}
-            <img
-              :src="`https://image.tmdb.org/t/p/w342/${movie.poster_path}`"
-              alt=""
-            />
-            <FontAwesomeIcon
-              v-for="index in getStarsVote(movie.vote_average)"
-              :key="index + 10"
-              icon="fa-solid fa-star"
-            />
-            <FontAwesomeIcon
-              v-for="index in 5 - getStarsVote(movie.vote_average)"
-              :key="index"
-              icon="fa-regular fa-star"
-            />
-            <!-- <FontAwesomeIcon icon="fa-solid fa-star" /> -->
-            <strong>Avarage Movie Vote - </strong> {{ movie.vote_average }}
-          </li>
-          <li></li>
-        </ul>
-        <ul class="d-flex flex-direction-column">
-          <li class="m-4"><h3>LISTA SERIE TV</h3></li>
-          <li v-for="serie in productions.mappedSeries" :key="serie.id">
-            <strong>Serie Title - </strong> {{ serie.original_heading }}
-            <strong>Original Serie Title - </strong> {{ serie.original }}
-            <strong>Serie Lenguage - </strong
-            ><img
-              class="flag"
-              :src="require(`./assets/flags/${serie.flagPath}.png`)"
-              alt=""
-            />
-            <img
-              :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`"
-              alt=""
-            />
-            <FontAwesomeIcon
-              v-for="index in getStarsVote(serie.vote_average)"
-              :key="index + 10"
-              icon="fa-solid fa-star"
-            />
-            <FontAwesomeIcon
-              v-for="index in 5 - getStarsVote(serie.vote_average)"
-              :key="index"
-              icon="fa-regular fa-star"
-            />
+        <div class="row">
+          <div class="col">
+            <ul class="d-flex">
+              <li class="m-4"><h3>LISTA FILM</h3></li>
+              <div
+                v-for="movie in productions.mappedMovies"
+                :key="movie.id"
+                class="d-flex"
+              >
+                <div class="card">
+                  <img
+                    :src="`https://image.tmdb.org/t/p/w342/${movie.poster_path}`"
+                    alt=""
+                  />
+                </div>
+                <li class="">
+                  <strong>Movie Title - </strong> {{ movie.original_heading }}
+                  <strong>Original Movie Title - </strong> {{ movie.original }}
+                  <strong>Movie Lenguage - </strong
+                  ><img
+                    class="flag"
+                    :src="require(`./assets/flags/${movie.flagPath}.png`)"
+                    alt=""
+                  />{{ movie.original_language }}
+                  <FontAwesomeIcon
+                    v-for="index in getStarsVote(movie.vote_average)"
+                    :key="index + 30"
+                    icon="fa-solid fa-star"
+                  />
+                  <FontAwesomeIcon
+                    v-for="index in 5 - getStarsVote(movie.vote_average)"
+                    :key="index"
+                    icon="fa-regular fa-star"
+                  />
+                  <strong>Avarage Movie Vote - </strong>
+                  {{ movie.vote_average }}
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col">
+            <ul class="d-flex">
+              <li class="m-4"><h3>LISTA SERIE TV</h3></li>
+              <div
+                v-for="serie in productions.mappedSeries"
+                :key="serie.id"
+                class="d-flex"
+              >
+                <li>
+                  <strong>Serie Title - </strong> {{ serie.original_heading }}
+                  <strong>Original Serie Title - </strong> {{ serie.original }}
+                  <strong>Serie Lenguage - </strong
+                  ><img
+                    class="flag"
+                    :src="require(`./assets/flags/${serie.flagPath}.png`)"
+                    alt=""
+                  />
+                  <img
+                    :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`"
+                    alt=""
+                  />
+                  <FontAwesomeIcon
+                    v-for="index in getStarsVote(serie.vote_average)"
+                    :key="index + 20"
+                    icon="fa-solid fa-star"
+                  />
+                  <FontAwesomeIcon
+                    v-for="index in 5 - getStarsVote(serie.vote_average)"
+                    :key="index"
+                    icon="fa-regular fa-star"
+                  />
 
-            <strong>Avarage Serie Vote - </strong> {{ serie.vote_average }}
-          </li>
-        </ul>
+                  <strong>Avarage Serie Vote - </strong>
+                  {{ serie.vote_average }}
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
       </div>
     </main>
     <footer></footer>
@@ -150,11 +171,7 @@ export default {
       };
     },
     getStarsVote(fullVote) {
-      if (this.vote_average === 0) {
-        return +1;
-      } else {
-        return Math.ceil(fullVote / 2) - 1;
-      }
+      return Math.ceil(fullVote / 2);
     },
 
     //endpoint: /search/tv/
@@ -191,5 +208,9 @@ export default {
 }
 ul {
   list-style: none;
+}
+body{
+  background-color: black;
+  color: white;
 }
 </style>
